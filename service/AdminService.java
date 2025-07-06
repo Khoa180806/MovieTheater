@@ -1,11 +1,13 @@
 package service;
 
+import java.util.List;
+
 import entity.Movie;
 import entity.ShowTime;
 
 public interface AdminService {
-    void addMovie(Movie movie);
-    void addShowTime(ShowTime showTime);
+    void addMovie(List<Movie> movies);
+    void addShowTime(List<ShowTime> showTimes);
     void findMovieById(String movieId);
     void findShowTimeById(String showTimeId);
     void updateMovieById(String movieId, Movie movie);
@@ -14,4 +16,5 @@ public interface AdminService {
     void deleteShowTimeById(String showTimeId);
     void showAllMovies();
     void showAllShowTimes();
+    void showAllTickets();
 }

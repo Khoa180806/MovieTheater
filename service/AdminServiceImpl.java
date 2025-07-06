@@ -5,20 +5,23 @@ import java.util.List;
 
 import entity.Movie;
 import entity.ShowTime;
+import entity.Ticket;
 
 public class AdminServiceImpl implements AdminService {
-    private List<Movie> movies = new ArrayList<>();
-    private List<ShowTime> showTimes = new ArrayList<>();
+
+    private static List<Movie> movies = new ArrayList<>();
+    private static List<ShowTime> showTimes = new ArrayList<>();
+    private static List<Ticket> tickets = new ArrayList<>();
 
     @Override
-    public void addMovie(Movie movie) {
-        movies.add(movie);
+    public void addMovie(List<Movie> movies) {
+        this.movies.addAll(movies);
         System.out.println("Movie added successfully");
     }
 
     @Override
-    public void addShowTime(ShowTime showTime) {
-        showTimes.add(showTime);
+    public void addShowTime(List<ShowTime> showTimes) {
+       this.showTimes.addAll(showTimes);
         System.out.println("Show time added successfully");
     }
 
@@ -99,15 +102,34 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void showAllMovies() {
-        for (Movie m : movies) {
-            System.out.println(m);
+        if (movies.isEmpty()) {
+            System.out.println("No movies found");
+        } else {
+            for (Movie m : movies) {
+                System.out.println(m);
+            }
         }
     }
 
     @Override
     public void showAllShowTimes() {
-        for (ShowTime s : showTimes) {
-            System.out.println(s);
+        if (showTimes.isEmpty()) {
+            System.out.println("No show times found");
+        } else {
+            for (ShowTime s : showTimes) {
+                System.out.println(s);
+            }
+        }
+    }
+
+    @Override
+    public void showAllTickets() {
+        if (tickets.isEmpty()) {
+            System.out.println("No tickets found");
+        } else {
+            for (Ticket t : tickets) {
+                System.out.println(t);
+            }
         }
     }
 }

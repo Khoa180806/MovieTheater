@@ -104,7 +104,6 @@ public class AdminServiceImpl implements AdminService {
                 break;
         }
         System.out.println("Movie not found");
-        scanner.close();
     }
 
     @Override
@@ -159,31 +158,18 @@ public class AdminServiceImpl implements AdminService {
                 break;
         }
         System.out.println("Show time not found");
-        scanner.close();
     }
 
     @Override
     public void deleteMovieById(String movieId) {
-        for (Movie m : movies) {
-            if (m.getMovieId().equals(movieId)) {
-                movies.remove(m);
-                System.out.println("Movie deleted successfully");
-                return;
-            }
-        }
-        System.out.println("Movie not found");
+        movies.removeIf(movie -> movie.getMovieId().equals(movieId));
+        System.out.println("Movie deleted successfully");
     }
 
     @Override
     public void deleteShowTimeById(String showTimeId) {
-        for (ShowTime s : showTimes) {
-            if (s.getShowTimeId().equals(showTimeId)) {
-                showTimes.remove(s);
-                System.out.println("Show time deleted successfully");
-                return;
-            }
-        }
-        System.out.println("Show time not found");
+        showTimes.removeIf(showTime -> showTime.getShowTimeId().equals(showTimeId));
+        System.out.println("Show time deleted successfully");
     }
 
     @Override

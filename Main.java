@@ -145,7 +145,7 @@ public class Main {
                     System.out.println("List of show times: ");
                     for (ShowTime showTime : showTimes) {
                         if (showTime.getMovieId().equals(movieId)) {
-                            System.out.println("Show Time ID: " + showTime.getShowTimeId() + " Show Date: " + showTime.getShowDate() + " Room Number: " + showTime.getRoomNumber());
+                            System.out.println("Show Time ID: " + showTime.getShowTimeId() + ", Show Date: " + showTime.getShowDate() + ", Room Number: " + showTime.getRoomNumber());
                         }
                     }
                     System.out.println("--------------------------------");

@@ -6,12 +6,12 @@ import entity.Movie;
 import entity.ShowTime;
 
 public interface AdminService {
-    void addMovie(List<Movie> movies);
-    void addShowTime(List<ShowTime> showTimes);
+    void addMovie(Movie movie);
+    void addShowTime(ShowTime showTime);
     void findMovieById(String movieId);
     void findShowTimeById(String showTimeId);
-    void updateMovieById(String movieId, Movie movie);
-    void updateShowTimeById(String showTimeId, ShowTime showTime);
+    void updateMovieById(String movieId);
+    void updateShowTimeById(String showTimeId);
     void deleteMovieById(String movieId);
     void deleteShowTimeById(String showTimeId);
     void showAllMovies();

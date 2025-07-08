@@ -2,6 +2,7 @@ package service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import entity.Movie;
 import entity.ShowTime;
@@ -14,14 +15,14 @@ public class AdminServiceImpl implements AdminService {
     private static List<Ticket> tickets = new ArrayList<>();
 
     @Override
-    public void addMovie(List<Movie> movies) {
-        this.movies.addAll(movies);
+    public void addMovie(Movie movie) {
+        this.movies.add(movie);
         System.out.println("Movie added successfully");
     }
 
     @Override
-    public void addShowTime(List<ShowTime> showTimes) {
-       this.showTimes.addAll(showTimes);
+    public void addShowTime(ShowTime showTime) {
+       this.showTimes.add(showTime);
         System.out.println("Show time added successfully");
     }
 
@@ -48,32 +49,112 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void updateMovieById(String movieId, Movie movie) {
-        for (Movie m : movies) {
-            if (m.getMovieId().equals(movieId)) {
-                m.setMovieName(movie.getMovieName());
-                m.setMovieType(movie.getMovieType());
-                m.setMovieDuration(movie.getMovieDuration());
-                System.out.println("Movie updated successfully");
-                return;
-            }
+    public void updateMovieById(String movieId) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("What do you want to update? ");
+        System.out.println("--------------------------------");
+        System.out.println("1. Update movie name");
+        System.out.println("2. Update movie type");
+        System.out.println("3. Update movie duration");
+        System.out.println("--------------------------------");
+        System.out.print("Choose your option: ");
+        int option = scanner.nextInt();
+        scanner.nextLine();
+        switch (option) {
+            case 1:
+                System.out.print("Enter movie name: ");
+                String movieName = scanner.nextLine();
+                for (Movie m : movies) {
+                    if (m.getMovieId().equals(movieId)) {
+                        m.setMovieName(movieName);
+                        System.out.println("Movie updated successfully");
+                        return;
+                    }
+                }
+                break;
+            case 2:
+                System.out.print("Enter movie type: ");
+                String movieType = scanner.nextLine();
+                for (Movie m : movies) {
+                    if (m.getMovieId().equals(movieId)) {
+                        m.setMovieType(movieType);
+                        System.out.println("Movie updated successfully");
+                        return;
+                    }
+                }
+                break;
+            case 3:
+                System.out.print("Enter movie duration: ");
+                String movieDuration = scanner.nextLine();
+                for (Movie m : movies) {
+                    if (m.getMovieId().equals(movieId)) {
+                        m.setMovieDuration(movieDuration);
+                        System.out.println("Movie updated successfully");
+                        return;
+                    }
+                }
+                break;
+            default:
+                System.out.println("Invalid option");
+                break;
         }
         System.out.println("Movie not found");
+        scanner.close();
     }
 
     @Override
-    public void updateShowTimeById(String showTimeId, ShowTime showTime) {
-        for (ShowTime s : showTimes) {
-            if (s.getShowTimeId().equals(showTimeId)) {
-                s.setShowTimeId(showTime.getShowTimeId());
-                s.setShowDate(showTime.getShowDate());
-                s.setRoomNumber(showTime.getRoomNumber());
-                s.setMovieId(showTime.getMovieId());
-                System.out.println("Show time updated successfully");
-                return;
-            }
+    public void updateShowTimeById(String showTimeId) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("What do you want to update? ");
+        System.out.println("--------------------------------");
+        System.out.println("1. Update show date");
+        System.out.println("2. Update room number");
+        System.out.println("3. Update movie id");
+        System.out.println("--------------------------------");
+        System.out.print("Choose your option: ");
+        int option = scanner.nextInt();
+        scanner.nextLine();
+        switch (option) {
+            case 1:
+                System.out.print("Enter show date: ");
+                String showDate = scanner.nextLine();
+                for (ShowTime s : showTimes) {
+                    if (s.getShowTimeId().equals(showTimeId)) {
+                        s.setShowDate(showDate);
+                        System.out.println("Show time updated successfully");
+                        return;
+                    }
+                }
+                break;
+            case 2:
+                System.out.print("Enter room number: ");
+                int roomNumber = scanner.nextInt();
+                scanner.nextLine();
+                for (ShowTime s : showTimes) {
+                    if (s.getShowTimeId().equals(showTimeId)) {
+                        s.setRoomNumber(roomNumber);
+                        System.out.println("Show time updated successfully");
+                        return;
+                    }
+                }
+                break;
+            case 3:
+                System.out.print("Enter movie id: ");
+                String movieId = scanner.nextLine();
+                for (ShowTime s : showTimes) {
+                    if (s.getShowTimeId().equals(showTimeId)) {
+                        s.setMovieId(movieId);
+                        System.out.println("Show time updated successfully");
+                        return;
+                    }
+                }
+                break;
+            default:
+                System.out.println("Invalid option");
+                break;
         }
         System.out.println("Show time not found");
+        scanner.close();
     }
 
     @Override

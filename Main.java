@@ -55,15 +55,18 @@ public class Main {
             default:
                 System.out.println("Invalid choice");
             }
-            scanner.close();
+            System.out.println("--------------------------------");
+            System.out.println("Enter any key to continue");
+            scanner.nextLine();
         } catch (Exception e) {
             System.out.println("Invalid choice");
-            scanner.close();
         }
     }
 
     public static void adminMenu(Admin admin, AdminService adminService) {
         int choice;
+        String showTimeId;
+        String movieId;
         do {
         admin.displayMenu();
         choice = scanner.nextInt();
@@ -71,31 +74,72 @@ public class Main {
         switch (choice) {
             case 1:
                 System.out.print("Enter movie id: ");
-                String movieId = scanner.nextLine();
+                movieId = scanner.nextLine();
                 System.out.print("Enter movie name: ");
                 String movieName = scanner.nextLine();
                 System.out.print("Enter movie type: ");
                 String movieType = scanner.nextLine();
                 System.out.print("Enter movie duration: ");
                 String movieDuration = scanner.nextLine();
-                movies.add(new Movie(movieId, movieName, movieType, movieDuration));
-                adminService.addMovie(movies);
+                Movie newMovie = new Movie(movieId, movieName, movieType, movieDuration);
+                movies.add(newMovie);
+                adminService.addMovie(newMovie);
                 break;
             case 2:
-                System.out.print("Enter show time id: ");
-                String showTimeId = scanner.nextLine();
+                showTimeId = "ST" + (int)(Math.random() * 900) + 100;
                 System.out.print("Enter show time date: ");
                 String showTimeDate = scanner.nextLine();
                 System.out.print("Enter room number: ");
                 int roomNumber = scanner.nextInt();
-                System.out.println("Choose movie id: ");
-                for (Movie movie : movies) {
-                    System.out.println(movie.getMovieId() + " " + movie.getMovieName());
+                scanner.nextLine();
+                if (movies.isEmpty()) {
+                    System.out.println("No movie found");
+                    System.out.println("--------------------------------");
+                    System.out.println("Enter any key to continue");
+                    scanner.nextLine();
+                    break;
+                } else {
+                    System.out.println("--------------------------------");
+                    for (Movie movie : movies) {
+                        System.out.println(movie.getMovieId() + ": " + movie.getMovieName());
+                    }
+                    System.out.println("--------------------------------");
+                    System.out.print("Choose movie id: ");
+                    String id = scanner.nextLine();
+                    ShowTime newShowTime = new ShowTime(showTimeId, showTimeDate, roomNumber, id);
+                    showTimes.add(newShowTime);
+                    adminService.addShowTime(newShowTime);
                 }
+                break;
+            case 3:
                 System.out.print("Enter movie id: ");
-                String id = scanner.nextLine();
-                showTimes.add(new ShowTime(showTimeId, showTimeDate, roomNumber, id));
-                adminService.addShowTime(showTimes);
+                movieId = scanner.nextLine();
+                adminService.findMovieById(movieId);
+                break;
+            case 4:
+                System.out.print("Enter show time id: ");
+                showTimeId = scanner.nextLine();
+                adminService.findShowTimeById(showTimeId);
+                break;
+            case 5:
+                System.out.print("Enter movie id: ");
+                movieId = scanner.nextLine();
+                adminService.updateMovieById(movieId);
+                break;
+            case 6:
+                System.out.print("Enter show time id: ");
+                String showtid = scanner.nextLine();
+                adminService.updateShowTimeById(showtid);
+                break;
+            case 7:
+                System.out.print("Enter movie id: ");
+                movieId = scanner.nextLine();
+                adminService.deleteMovieById(movieId);
+                break;
+            case 8:
+                System.out.print("Enter show time id: ");
+                showTimeId = scanner.nextLine();
+                adminService.deleteShowTimeById(showTimeId);
                 break;
             case 9:
                 adminService.showAllMovies();
@@ -112,10 +156,24 @@ public class Main {
             default:
                 System.out.println("Invalid choice");
             }
+            System.out.println("--------------------------------");
+            System.out.println("Enter any key to continue");
+            scanner.nextLine();
         } while (choice != 12);
     }
 
     public static void customerMenu(Customer customer) {
-        customer.displayMenu();
+        int choice;
+        do {
+            customer.displayMenu();
+            choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice) {
+                case 1:
+                    break;
+                case 2:
+                    break;
+            }
+        } while (choice != 12);
     }
 }

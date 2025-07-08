@@ -17,7 +17,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void showTickets() {
         for (Ticket t : tickets) {
-            System.out.println(t);
+            System.out.println("Ticket ID: " + t.getTicketId() + "\nShow Date: " + t.getShowDate() + "\nRoom Number: " + t.getRoomNumber() + "\nSeat Number: " + t.getSeatNumber() + "\nCustomer Name: " + t.getCustomerName());
         }
     }
 }

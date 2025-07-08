@@ -7,6 +7,9 @@ public class Admin extends User {
 
     @Override
     public void displayMenu() {
+        System.out.println("--------------------------------");
+        System.out.println("Admin Menu");
+        System.out.println("--------------------------------");
         System.out.println("1. Add Movie");
         System.out.println("2. Add Show Time");
         System.out.println("3. Find Movie by ID");
@@ -18,6 +21,8 @@ public class Admin extends User {
         System.out.println("9. Show All Movies");
         System.out.println("10. Show All Show Times");
         System.out.println("11. Show All Tickets");
-        System.out.println("12. Exit");
+        System.out.println("12. Logout");
+        System.out.println("--------------------------------");
+        System.out.print("Enter your choice: ");
     }
 }

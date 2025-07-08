@@ -7,8 +7,13 @@ public class Customer extends User {
 
     @Override
     public void displayMenu() {
+        System.out.println("--------------------------------");
+        System.out.println("Customer Menu");
+        System.out.println("--------------------------------");
         System.out.println("1. Buy Ticket");
         System.out.println("2. Show Tickets");
-        System.out.println("3. Exit");
+        System.out.println("3. Logout");
+        System.out.println("--------------------------------");
+        System.out.print("Enter your choice: ");
     }
 }

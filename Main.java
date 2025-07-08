@@ -4,6 +4,7 @@ import entity.Admin;
 import entity.Customer;
 import entity.Movie;
 import entity.ShowTime;
+import entity.Ticket;
 import service.AdminService;
 import service.AdminServiceImpl;
 import service.CustomerService;
@@ -14,53 +15,9 @@ public class Main {
     
     private static List<Movie> movies = new ArrayList<>();
     private static List<ShowTime> showTimes = new ArrayList<>();
-    
+    private static List<Ticket> tickets = new ArrayList<>();
     public static void main(String[] args) {
-        Admin admin = new Admin("admin", "123", "admin");
-        Customer customer = new Customer("customer", "123", "customer");
-
-        AdminService adminService = new AdminServiceImpl();
-        CustomerService customerService = new CustomerServiceImpl();
-
-        //menu login
-        try {
-        System.out.println("Welcome to the Movie Ticket Booking System");
-        System.out.println("--------------------------------");
-        System.out.println("1. Login");
-        System.out.println("2. Exit");
-        System.out.println("--------------------------------");
-        System.out.print("Enter your choice: ");
-
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-        switch (choice) {
-            case 1:
-                System.out.print("Enter your username: ");
-                String username = scanner.nextLine();
-                System.out.print("Enter your password: ");
-                String password = scanner.nextLine();
-                if (username.equals("admin") && password.equals("123")) {
-                    System.out.println("Login successful");
-                    adminMenu(admin, adminService);
-                } else if (username.equals("customer") && password.equals("123")) {
-                    System.out.println("Login successful");
-                    customerMenu(customer);
-                } else {
-                    System.out.println("Login failed");
-                }
-                break;
-            case 2:
-                System.out.println("Thank you for using the Movie Ticket Booking System");
-                break;
-            default:
-                System.out.println("Invalid choice");
-            }
-            System.out.println("--------------------------------");
-            System.out.println("Enter any key to continue");
-            scanner.nextLine();
-        } catch (Exception e) {
-            System.out.println("Invalid choice");
-        }
+        login();
     }
 
     public static void adminMenu(Admin admin, AdminService adminService) {
@@ -100,6 +57,7 @@ public class Main {
                     break;
                 } else {
                     System.out.println("--------------------------------");
+                    System.out.println("List of movies: ");
                     for (Movie movie : movies) {
                         System.out.println(movie.getMovieId() + ": " + movie.getMovieName());
                     }
@@ -151,10 +109,12 @@ public class Main {
                 adminService.showAllTickets();
                 break;
             case 12:
-                System.out.println("Thank you for using the Movie Ticket Booking System");
+                System.out.println("Logout successful");
+                login();
                 break;
             default:
                 System.out.println("Invalid choice");
+                break;   
             }
             System.out.println("--------------------------------");
             System.out.println("Enter any key to continue");
@@ -162,18 +122,120 @@ public class Main {
         } while (choice != 12);
     }
 
-    public static void customerMenu(Customer customer) {
+    public static void customerMenu(Customer customer, CustomerService customerService, AdminService adminService) {
         int choice;
+        String movieId;
+        String showTimeId;
+        String showDate = "";
+        int roomNumber = 0;
         do {
             customer.displayMenu();
             choice = scanner.nextInt();
             scanner.nextLine();
             switch (choice) {
                 case 1:
+                    String ticketId = "T" + (int)(Math.random() * 900) + 100;
+                    System.out.println("List of movies: ");
+                    for (Movie movie : movies) {
+                        System.out.println(movie.getMovieId() + ": " + movie.getMovieName());
+                    }
+                    System.out.println("--------------------------------");
+                    System.out.print("Enter movie id: ");
+                    movieId = scanner.nextLine();   
+                    System.out.println("List of show times: ");
+                    for (ShowTime showTime : showTimes) {
+                        if (showTime.getMovieId().equals(movieId)) {
+                            System.out.println("Show Time ID: " + showTime.getShowTimeId() + " Show Date: " + showTime.getShowDate() + " Room Number: " + showTime.getRoomNumber());
+                        }
+                    }
+                    System.out.println("--------------------------------");
+                    System.out.print("Enter show time id: ");
+                    showTimeId = scanner.nextLine();
+                    for (ShowTime showTime : showTimes) {
+                        if (showTime.getShowTimeId().equals(showTimeId)) {
+                            roomNumber = showTime.getRoomNumber();
+                            showDate = showTime.getShowDate();
+                            break;
+                        }
+                    }
+                    System.out.println("List of seat number: ");
+                    for (int i = 1; i <= 50; i++) {
+                        System.out.print(i + " ");
+                        if (i % 10 == 0) {
+                            System.out.println();
+                        }
+                    }
+                    System.out.println("--------------------------------");
+                    System.out.print("Enter seat number: ");
+                    String seatNumber = scanner.nextLine();
+                    System.out.print("Enter customer name: ");
+                    String customerName = scanner.nextLine();
+                    Ticket newTicket = new Ticket(ticketId, showDate, roomNumber, seatNumber, customerName, showTimeId, movieId);
+                    tickets.add(newTicket);
+                    customerService.buyTicket(newTicket);
+                    adminService.addTicket(newTicket);
                     break;
                 case 2:
+                    customerService.showTickets();
                     break;
+                case 3:
+                    System.out.println("Logout successful");
+                    login();
+                    break;
+                default:
+                    System.out.println("Invalid choice");
             }
-        } while (choice != 12);
+            System.out.println("--------------------------------");
+            System.out.println("Enter any key to continue");
+            scanner.nextLine();
+        } while (choice != 3);
+    }
+
+    public static void login() {
+        Admin admin = new Admin("admin", "123", "admin");
+        Customer customer = new Customer("customer", "123", "customer");
+
+        AdminService adminService = new AdminServiceImpl();
+        CustomerService customerService = new CustomerServiceImpl();
+
+        try {
+            System.out.println("Welcome to the Movie Ticket Booking System");
+            System.out.println("--------------------------------");
+            System.out.println("1. Login");
+            System.out.println("2. Exit");
+            System.out.println("--------------------------------");
+            System.out.print("Enter your choice: ");
+    
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter your username: ");
+                    String username = scanner.nextLine();
+                    System.out.print("Enter your password: ");
+                    String password = scanner.nextLine();
+                    if (username.equals("admin") && password.equals("123")) {
+                        System.out.println("Login successful");
+                        adminMenu(admin, adminService);
+                    } else if (username.equals("customer") && password.equals("123")) {
+                        System.out.println("Login successful");
+                        customerMenu(customer, customerService, adminService);
+                    } else {
+                        System.out.println("Login failed");
+                    }
+                    break;
+                case 2:
+                    System.out.println("Thank you for using the Movie Ticket Booking System");
+                    break;
+                default:
+                    System.out.println("Invalid choice");
+                    break;
+                }
+                System.out.println("--------------------------------");
+                System.out.println("Enter any key to continue");
+                scanner.nextLine();
+            } catch (Exception e) {
+                System.out.println("Invalid choice");
+            }
     }
 }

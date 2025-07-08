@@ -27,6 +27,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public void addTicket(Ticket ticket) {
+        this.tickets.add(ticket);
+    }
+
+    @Override
     public void findMovieById(String movieId) {
         for (Movie movie : movies) {
             if (movie.getMovieId().equals(movieId)) {
@@ -209,7 +214,7 @@ public class AdminServiceImpl implements AdminService {
             System.out.println("No tickets found");
         } else {
             for (Ticket t : tickets) {
-                System.out.println(t);
+                System.out.println("Ticket ID: " + t.getTicketId() + "\nShow Date: " + t.getShowDate() + "\nRoom Number: " + t.getRoomNumber() + "\nSeat Number: " + t.getSeatNumber() + "\nCustomer Name: " + t.getCustomerName());
             }
         }
     }

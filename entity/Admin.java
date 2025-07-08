@@ -21,7 +21,7 @@ public class Admin extends User {
         System.out.println("9. Show All Movies");
         System.out.println("10. Show All Show Times");
         System.out.println("11. Show All Tickets");
-        System.out.println("12. Exit");
+        System.out.println("12. Logout");
         System.out.println("--------------------------------");
         System.out.print("Enter your choice: ");
     }
